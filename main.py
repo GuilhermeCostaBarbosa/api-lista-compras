@@ -9,6 +9,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lista.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+with app.app_context():
+    db.create_all()
+
 # Rota para listar os itens do DB via JSON
 @app.route('/api/itens', methods=['GET'])
 def get_itens():
@@ -72,6 +75,4 @@ def delete_item(id):
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
